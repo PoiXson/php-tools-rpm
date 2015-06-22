@@ -52,10 +52,11 @@ echo "Install.."
 # delete existing rpm's
 %{__rm} -fv "%{_rpmdir}/%{name}"*.noarch.rpm
 # create directories
-%{__install} -d -m 755 \
+%{__install} -d -m 0755 \
 	"${RPM_BUILD_ROOT}%{prefix}" \
+	"${RPM_BUILD_ROOT}%{_sysconfdir}/profile.d/" \
 		|| exit 1
-# download phar's
+# download phar files
 echo "Downloading.."
 pushd "${RPM_BUILD_ROOT}%{prefix}"
 	echo;echo
@@ -67,14 +68,19 @@ pushd "${RPM_BUILD_ROOT}%{prefix}"
 	curl -SL https://box-project.github.io/box2/installer.php | php
 	mv box.phar      box      || exit 1
 	echo;echo
-	# download phpunit
-	curl -OS https://phar.phpunit.de/phpunit.phar
-	mv phpunit.phar  phpunit  || exit 1
-	echo;echo
 popd
+# create profile.d file
+%{__cat} <<EOF >"${RPM_BUILD_ROOT}%{_sysconfdir}/profile.d/phpunit.sh"
+#!/bin/sh
+
+alias phpunit='./vendor/bin/phpunit'
+
+EOF
+%{__chmod} 0755 \
+	"${RPM_BUILD_ROOT}%{_sysconfdir}/profile.d/phpunit.sh" \
+		|| exit 1
 %{__chmod} 555 "${RPM_BUILD_ROOT}%{prefix}/composer" || exit 1
 %{__chmod} 555 "${RPM_BUILD_ROOT}%{prefix}/box"      || exit 1
-%{__chmod} 555 "${RPM_BUILD_ROOT}%{prefix}/phpunit"  || exit 1
 
 
 
@@ -91,4 +97,5 @@ fi
 %defattr(-,root,root,-)
 %{prefix}/composer
 %{prefix}/box
-%{prefix}/phpunit
+%{_sysconfdir}/profile.d/phpunit.sh
+

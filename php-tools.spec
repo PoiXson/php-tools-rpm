@@ -73,8 +73,8 @@ popd
 %{__cat} <<EOF >"${RPM_BUILD_ROOT}%{_sysconfdir}/profile.d/phpunit.sh"
 #!/bin/sh
 
-alias phpunit='./vendor/bin/phpunit'
-alias phpunitcoverage='./vendor/bin/phpunit --coverage-text=coverage.txt --coverage-html coverage-html --coverage-xml coverage-xml/'
+alias phpunit='clear;./vendor/bin/phpunit'
+alias phpunitcoverage='clear;./vendor/bin/phpunit --coverage-text=coverage.txt --coverage-html coverage-html --coverage-xml coverage-xml/'
 alias phpcover='phpunitcoverage'
 
 EOF

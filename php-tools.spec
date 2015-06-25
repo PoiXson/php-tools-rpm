@@ -74,7 +74,7 @@ popd
 #!/bin/sh
 
 alias phpunit='clear;./vendor/bin/phpunit'
-alias phpunitcoverage='clear;./vendor/bin/phpunit --coverage-text=coverage.txt --coverage-html coverage-html --coverage-xml coverage-xml/'
+alias phpunitcoverage='clear;./vendor/bin/phpunit --coverage-text=coverage/coverage.txt --coverage-html coverage/html/ --coverage-xml coverage/xml/'
 alias phpcover='phpunitcoverage'
 
 EOF

@@ -74,8 +74,11 @@ popd
 #!/bin/sh
 
 alias phpunit='clear;./vendor/bin/phpunit'
-alias phpunitcoverage='clear;./vendor/bin/phpunit --coverage-text=coverage/coverage.txt --coverage-html coverage/html/ --coverage-xml coverage/xml/'
-alias phpcover='phpunitcoverage'
+alias phpcover='clear;./vendor/bin/phpunit \
+--coverage-text=coverage/coverage.txt \
+--coverage-html coverage/html/ \
+--coverage-xml coverage/xml/;\
+cat coverage/coverage.txt | head -n10 | tail -n6'
 
 EOF
 %{__chmod} 0755 \

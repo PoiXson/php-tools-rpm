@@ -12,6 +12,8 @@ URL: http://poixson.com/
 BuildArch: noarch
 Prefix: /usr/bin
 %define  _rpmfilename  %%{NAME}-%%{VERSION}-%%{RELEASE}.%%{ARCH}.rpm
+Requires: php56w
+Requires: php56w-xml
 
 #Requires: php-cli
 #Requires: php-curl

@@ -10,7 +10,7 @@ Group: Development Tools
 License: MIT
 URL: http://poixson.com/
 BuildArch: noarch
-Prefix: /usr/bin
+Prefix: %{_bindir}
 %define  _rpmfilename  %%{NAME}-%%{VERSION}-%%{RELEASE}.%%{ARCH}.rpm
 Requires: php56w
 Requires: php56w-xml
@@ -55,7 +55,7 @@ echo "Install.."
 %{__rm} -fv "%{_rpmdir}/%{name}"*.noarch.rpm
 # create directories
 %{__install} -d -m 0755 \
-	"${RPM_BUILD_ROOT}%{prefix}" \
+	"${RPM_BUILD_ROOT}%{prefix}/"                \
 	"${RPM_BUILD_ROOT}%{_sysconfdir}/profile.d/" \
 		|| exit 1
 # download phar files
@@ -81,13 +81,16 @@ alias phpcover='clear;./vendor/bin/phpunit \
 --coverage-html coverage/html/ \
 --coverage-xml coverage/xml/;\
 cat coverage/coverage.txt | head -n10 | tail -n6'
-
 EOF
 %{__chmod} 0755 \
 	"${RPM_BUILD_ROOT}%{_sysconfdir}/profile.d/phpunit.sh" \
 		|| exit 1
-%{__chmod} 555 "${RPM_BUILD_ROOT}%{prefix}/composer" || exit 1
-%{__chmod} 555 "${RPM_BUILD_ROOT}%{prefix}/box"      || exit 1
+%{__chmod} 0555 "${RPM_BUILD_ROOT}%{prefix}/composer" || exit 1
+%{__chmod} 0555 "${RPM_BUILD_ROOT}%{prefix}/box"      || exit 1
+
+
+
+%check
 
 
 
